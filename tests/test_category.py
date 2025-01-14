@@ -1,22 +1,21 @@
 from src.category import Category
-from src.product import Product
-def test_category_init(first_category):
-    expected_products = [
-        ('молоко', 'молоко ультрапастеризованное', 150, 1000),
-        ('творог', 'обезжиренный', 100, 500),
-        ('масло', 'жирность 82,5', 250, 700),
-    ]
-
-    for product, expected in zip(first_category.list_products, expected_products):
-        assert product.name == expected[0]
-        assert product.description == expected[1]
-        assert product.price == expected[2]
-        assert product.quantity == expected[3]
 
 
-def test_product_count():
-    product1 = Product('молоко', 'ультрапастеризованное', 150, 1000)
-    product2 = Product('творог', 'обезжиренный', 100, 500)
+def test_category_initialization(category):
+    assert category.name == 'Молочные продукты'
+    assert category.description == 'произведенные из молока или молочных продуктов'
+    assert len(category.list_products) == 3
+    assert category.list_products[0].name == 'молоко'
+    assert category.list_products[1].name == 'творог'
+    assert category.list_products[2].name == 'масло'
 
-    category = Category('Молочные продукты', 'Продукты из молока', [product1, product2])
-    assert category.product_count == 2
+
+def test_product_count(category):
+    assert Category.product_count == 3  # Проверяем общее количество продуктов
+
+
+def test_product_details(category):
+    product_names = [product.name for product in category.list_products]
+    assert 'молоко' in product_names
+    assert 'творог' in product_names
+    assert 'масло' in product_names

@@ -12,8 +12,8 @@ class Category:
         self.name = name
         self.description = description
         self.list_products = list_products or []
-        self.category_count += 1  # увеличиваем количество категорий
-        self.product_count += len(self.list_products)  # увеличиваем общее количество товаров
+        Category.category_count += 1  # увеличиваем количество категорий
+        Category.product_count += len(list_products) if list_products else 0  # увеличиваем общее количество товаров
 
 
 if __name__ == '__main__':

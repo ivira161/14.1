@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "14-1"
+version = "0.1.0"
+description = ""
+authors = ["Ira <market_don@mail.ru>"]
+readme = "README.md"
+packages = [{include = "14"}]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

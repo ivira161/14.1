@@ -4,16 +4,28 @@ from src.product import Product
 class Category:
     name: str
     description: str
-    list_products: list
     category_count = 0  # количество категорий
     product_count = 0  # количество товаров
 
     def __init__(self, name, description, list_products=None):
         self.name = name
         self.description = description
-        self.list_products = list_products or []
+        self.__list_products = list_products or []  # приватный список товаров
         Category.category_count += 1  # увеличиваем количество категорий
-        Category.product_count += len(list_products) if list_products else 0  # увеличиваем общее количество товаров
+        Category.product_count += len(self.__list_products)  # увеличиваем общее количество товаров
+
+    def add_product(self, new_product):
+        """Добавляет продукт в категорию."""
+        if isinstance(new_product, Product):
+            self.__list_products.append(new_product)
+            Category.product_count += 1  # обновляем общее количество товаров
+        else:
+            raise ValueError("Объект должен быть экземпляром класса Product")
+
+    @property
+    def products(self):
+        """Геттер для получения списка товаров."""
+        return self.__list_products
 
 
 if __name__ == '__main__':
@@ -22,11 +34,15 @@ if __name__ == '__main__':
     product3 = Product('масло', 'жирность 82,5', 250, 700)
 
     category = Category('Молочные продукты', 'произведенные из молока или молочных продуктов',
-                        [product1, product2, product3])
+                        [product1, product2])
+
+    # Добавляем новый продукт через метод add_product
+    category.add_product(product3)
 
     print(category.name)
     print(category.description)
     print(category.category_count)
     print(category.product_count)
-    for product in category.list_products:
-        print(product.name, product.description)
+
+    # Получаем список товаров через геттер products
+    print(category.products)

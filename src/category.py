@@ -14,13 +14,10 @@ class Category:
         Category.category_count += 1  # увеличиваем количество категорий
         Category.product_count += len(self.__list_products)  # увеличиваем общее количество товаров
 
-    def add_product(self, new_product):
-        """Добавляет продукт в категорию."""
-        if isinstance(new_product, Product):
-            self.__list_products.append(new_product)
-            Category.product_count += 1  # обновляем общее количество товаров
-        else:
-            raise ValueError("Объект должен быть экземпляром класса Product")
+    def add_product(self, product):
+        if not isinstance(product, Product):
+            raise ValueError("Object must be an instance of Product")
+        self.__list_products.append(product)
 
     @property
     def products(self):

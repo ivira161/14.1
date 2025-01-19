@@ -1,22 +1,28 @@
-from src.category import Category
+import pytest
 from src.product import Product
-def test_category_init(first_category):
-    expected_products = [
-        ('молоко', 'молоко ультрапастеризованное', 150, 1000),
-        ('творог', 'обезжиренный', 100, 500),
-        ('масло', 'жирность 82,5', 250, 700),
-    ]
-
-    for product, expected in zip(first_category.list_products, expected_products):
-        assert product.name == expected[0]
-        assert product.description == expected[1]
-        assert product.price == expected[2]
-        assert product.quantity == expected[3]
+from src.category import Category
 
 
-def test_product_count():
+@pytest.fixture
+def category():
     product1 = Product('молоко', 'ультрапастеризованное', 150, 1000)
     product2 = Product('творог', 'обезжиренный', 100, 500)
+    return Category('Молочные продукты', 'произведенные из молока или молочных продуктов', [product1, product2])
 
-    category = Category('Молочные продукты', 'Продукты из молока', [product1, product2])
-    assert category.product_count == 2
+
+def test_category_initialization(category):
+    assert category.name == 'Молочные продукты'
+    assert category.description == 'произведенные из молока или молочных продуктов'
+    assert len(category.products) == 2
+
+
+def test_add_product_to_category(category):
+    new_product = Product('масло', 'жирность 82,5', 250, 700)
+    category.add_product(new_product)
+    assert len(category.products) == 3
+    assert new_product in category.products
+
+
+def test_invalid_product_addition(category):
+    with pytest.raises(ValueError):
+        category.add_product("не продукт")  # Передаём некорректный объект

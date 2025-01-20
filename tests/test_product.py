@@ -36,6 +36,6 @@ def test_price_validation():
     product.price = 200
     assert product.price == 200
 
-    # Попытка установить некорректную цену
-    product.price = -50
-    assert product.price == 200  # Цена не должна измениться
+    # Проверяем выброс исключения при некорректной цене
+    with pytest.raises(ValueError, match="Цена не должна быть нулевая или отрицательная"):
+        product.price = -50

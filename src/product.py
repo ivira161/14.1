@@ -1,11 +1,4 @@
-from src.category import Category
-
-
 class Product:
-    name: str
-    description: str
-    quantity: int
-
     def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
@@ -21,9 +14,8 @@ class Product:
     def price(self, value):
         """Сеттер для приватного атрибута цены с проверкой."""
         if value <= 0:
-            print("Цена не должна быть нулевая или отрицательная")
-        else:
-            self.__price = value
+            raise ValueError("Цена не должна быть нулевая или отрицательная")
+        self.__price = value
 
     @classmethod
     def new_product(cls, product_info):
@@ -34,6 +26,27 @@ class Product:
             price=product_info['price'],
             quantity=product_info['quantity']
         )
+
+
+class Category:
+    product_count = 0  # Счётчик продуктов
+
+    def __init__(self, name, description, list_products=None):
+        self.name = name
+        self.description = description
+        self.__list_products = list_products or []  # приватный список товаров
+        Category.product_count += len(self.__list_products)  # Увеличиваем счётчик продуктов
+
+    def add_product(self, product):
+        if not isinstance(product, Product):
+            raise ValueError("Object must be an instance of Product")
+        self.__list_products.append(product)
+        Category.product_count += 1  # Увеличиваем счётчик продуктов
+
+    @property
+    def products(self):
+        """Геттер для получения списка товаров."""
+        return self.__list_products
 
 
 if __name__ == '__main__':
@@ -62,4 +75,5 @@ if __name__ == '__main__':
     print(f"Количество продуктов: {Category.product_count}")
 
     # Получаем список товаров через геттер products
-    print(category.products)
+    for prod in category.products:
+        print(f"{prod.name}: {prod.description}, {prod.price} руб., Остаток: {prod.quantity} шт.")

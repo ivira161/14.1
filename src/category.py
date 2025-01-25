@@ -14,6 +14,10 @@ class Category:
         self.__list_products = list_products or []
         Category.product_count += len(self.__list_products)
 
+    def __str__(self):
+        return f"{self.name}, количество продуктов: {len(self.__list_products)} шт."
+
+
     def add_product(self, product: Product):
         """
         Добавляет товар в категорию. Увеличивает общий счётчик продуктов.

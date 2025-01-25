@@ -90,6 +90,6 @@ def test_category_str(product1, product2):
     """
     category = Category("Молочные продукты", "Разные товары", [product1, product2])
 
-    # Ожидаем, что длина списка __list_products = 2
-    expected_str = "Молочные продукты, количество продуктов: 2 шт."
+    # Ожидаем, что количество продуктов = 1500
+    expected_str = "Молочные продукты, общее количество единиц товара: 1500 шт."
     assert str(category) == expected_str

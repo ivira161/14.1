@@ -14,6 +14,12 @@ class Category:
         self.__list_products = list_products or []
         Category.product_count += len(self.__list_products)
 
+    def __str__(self):
+        # Подсчёт общей суммы количеств всех товаров
+        total_quantity = sum(product.quantity for product in self.__list_products)
+        return f"{self.name}, общее количество единиц товара: {total_quantity} шт."
+
+
     def add_product(self, product: Product):
         """
         Добавляет товар в категорию. Увеличивает общий счётчик продуктов.

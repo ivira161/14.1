@@ -53,3 +53,9 @@ class Product:
             price=product_info['price'],
             quantity=product_info['quantity']
         )
+
+    def __add__(self, other):
+        """Возвращает сумму произведений цены на количество для двух продуктов."""
+        if not isinstance(other, Product):
+            raise TypeError("Складывать можно только объекты класса Product")
+        return (self.price * self.quantity) + (other.price * other.quantity)

@@ -95,3 +95,33 @@ def test_new_product_invalid_types(data, error_message):
     """Тест выброса TypeError при некорректном типе одного из полей."""
     with pytest.raises(TypeError, match=error_message):
         Product.new_product(data)
+
+
+def test_product_add(product1, product2, product3):
+    """
+    Тест магического метода __add__ в классе Product.
+    Проверяем, что product1 + product2 возвращает сумму произведений цены на количество
+    и аналогично для других пар.
+    """
+
+    # product1 + product2
+    # 150 * 1000 + 100 * 500 = 150000 + 50000 = 200000
+    assert product1 + product2 == 200000
+
+    # product1 + product3
+    # 150 * 1000 + 250 * 700 = 150000 + 175000 = 325000
+    assert product1 + product3 == 325000
+
+    # product2 + product3
+    # 100 * 500 + 250 * 700 = 50000 + 175000 = 225000
+    assert product2 + product3 == 225000
+
+
+def test_product_add_type_error(product1):
+    """
+    Проверяем, что при попытке сложения с объектом неподходящего типа
+    возникает исключение TypeError.
+    """
+    with pytest.raises(TypeError, match="Складывать можно только объекты класса Product"):
+        # Пытаемся сложить product1 (Product) со строкой
+        invalid_result = product1 + "не продукт"

@@ -81,3 +81,15 @@ def test_products_property():
     # Проверяем, что каждое из строковых представлений есть в общем выводе.
     assert str(p1) in product_str
     assert str(p2) in product_str
+
+
+def test_category_str(product1, product2):
+    """
+    Тест метода __str__ в классе Category,
+    используя заранее определённые фикстуры product1 и product2.
+    """
+    category = Category("Молочные продукты", "Разные товары", [product1, product2])
+
+    # Ожидаем, что количество продуктов = 1500
+    expected_str = "Молочные продукты, общее количество единиц товара: 1500 шт."
+    assert str(category) == expected_str

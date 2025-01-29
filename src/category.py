@@ -2,31 +2,47 @@ from src.product import Product
 
 
 class Category:
-    name: str
-    description: str
-    list_products: list
-    category_count = 0  # количество категорий
-    product_count = 0  # количество товаров
+    product_count = 0  # Счётчик всех продуктов во всех категориях
 
-    def __init__(self, name, description, list_products=None):
+    def __init__(self, name: str, description: str, list_products=None):
+        """
+        Инициализация категории. Принимает список товаров (объектов Product).
+        Увеличивает счётчик продуктов на длину переданного списка.
+        """
         self.name = name
         self.description = description
-        self.list_products = list_products or []
-        self.category_count += 1  # увеличиваем количество категорий
-        self.product_count += len(self.list_products)  # увеличиваем общее количество товаров
+        self.__list_products = list_products or []
+        Category.product_count += len(self.__list_products)
 
+    def add_product(self, product: Product):
+        """
+        Добавляет товар в категорию. Увеличивает общий счётчик продуктов.
+        """
+        if not isinstance(product, Product):
+            raise ValueError("Object must be an instance of Product")
+        self.__list_products.append(product)
+        Category.product_count += 1
 
-if __name__ == '__main__':
-    product1 = Product('молоко', 'молоко ультрапастеризованное', 150, 1000)
-    product2 = Product('творог', 'обезжиренный', 100, 500)
-    product3 = Product('масло', 'жирность 82,5', 250, 700)
+    def remove_product(self, product: Product):
+        """
+        Удаляет товар из категории (если он там есть).
+        Уменьшает общий счётчик продуктов.
+        """
+        if product in self.__list_products:
+            self.__list_products.remove(product)
+            Category.product_count -= 1
 
-    category = Category('Молочные продукты', 'произведенные из молока или молочных продуктов',
-                        [product1, product2, product3])
+    @property
+    def products_list(self):
+        """
+        Возвращает внутренний список товаров (как объекты).
+        """
+        return self.__list_products
 
-    print(category.name)
-    print(category.description)
-    print(category.category_count)
-    print(category.product_count)
-    for product in category.list_products:
-        print(product.name, product.description)
+    @property
+    def products(self):
+        """
+        Возвращает строковое представление всех товаров в категории,
+        каждый товар на новой строке.
+        """
+        return "\n".join(str(product) for product in self.__list_products)

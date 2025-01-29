@@ -55,7 +55,43 @@ class Product:
         )
 
     def __add__(self, other):
-        """Возвращает сумму произведений цены на количество для двух продуктов."""
-        if not isinstance(other, Product):
-            raise TypeError("Складывать можно только объекты класса Product")
+        """Возвращает сумму произведений цены на количество для двух продуктов.
+        Складывает товары только из одинаковых классов продуктов."""
+
+        # Проверка, что объекты одного типа
+        if type(self) is not type(other):
+            raise TypeError(f"Нельзя складывать {type(self).__name__} и {type(other).__name__}")
+
         return (self.price * self.quantity) + (other.price * other.quantity)
+
+
+class Smartphone(Product):
+    def __init__(self, name: str, description: str, price: float, quantity: int,
+                 efficiency: str, model: str, memory: int, color: str):
+        # Передаём основные атрибуты в родительский класс
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+    def __str__(self):
+        base_info = super().__str__()
+        return f"{base_info}, Модель: {self.model}, Память: {self.memory} ГБ, Цвет: {self.color}, Производительность: {self.efficiency}"
+
+
+class LawnGrass(Product):
+    def __init__(self, name: str, description: str, price: float, quantity: int,
+                 country: str, germination_period: int, color: str):
+        # Передаём основные атрибуты в родительский класс
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
+
+    def __str__(self):
+        base_info = super().__str__()
+        return f"{base_info}, Страна: {self.country}, Срок прорастания: {self.germination_period} дней, Цвет: {self.color}"
+
+
+

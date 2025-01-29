@@ -24,6 +24,10 @@ def product2():
 def product3():
     return Product('масло', 'жирность 82,5', 250, 700)
 
+@pytest.fixture
+def product4():
+    return Product('смартфон', 'мини', 25000, 200)
+
 
 @pytest.fixture
 def category(product1, product2, product3):

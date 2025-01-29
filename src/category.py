@@ -12,6 +12,12 @@ class Category:
         self.name = name
         self.description = description
         self.__list_products = list_products or []
+
+        # Проверка переданных продуктов при инициализации
+        for product in self.__list_products:
+            if not isinstance(product, Product):
+                raise ValueError("Все элементы списка должны быть экземплярами класса Product или его наследников")
+
         Category.product_count += len(self.__list_products)
 
     def __str__(self):
@@ -19,13 +25,12 @@ class Category:
         total_quantity = sum(product.quantity for product in self.__list_products)
         return f"{self.name}, общее количество единиц товара: {total_quantity} шт."
 
-
     def add_product(self, product: Product):
         """
         Добавляет товар в категорию. Увеличивает общий счётчик продуктов.
         """
         if not isinstance(product, Product):
-            raise ValueError("Object must be an instance of Product")
+            raise ValueError("Object must be an instance of Product or its subclasses")
         self.__list_products.append(product)
         Category.product_count += 1
 

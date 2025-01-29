@@ -93,3 +93,16 @@ def test_category_str(product1, product2):
     # Ожидаем, что количество продуктов = 1500
     expected_str = "Молочные продукты, общее количество единиц товара: 1500 шт."
     assert str(category) == expected_str
+
+
+def test_category_initialization_with_invalid_product():
+    """Тест выброса исключения при передаче некорректного продукта в конструктор."""
+    with pytest.raises(ValueError,
+                       match="Все элементы списка должны быть экземплярами класса Product или его наследников"):
+        Category('Некорректная категория', 'Тестовое описание', ['не продукт'])
+
+
+
+
+
+

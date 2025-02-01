@@ -1,5 +1,5 @@
 import pytest
-from src.product import Product
+from src.product import Product, BaseProduct
 
 
 def test_product_init_valid():
@@ -152,12 +152,39 @@ def test_add_invalid_product_type(category):
         category.add_product("не продукт")
 
 
-def test_product_add_type_error(product1):
+def test_product_add_type_error2(product1):
     """Тест выброса TypeError при попытке сложения с неподходящим типом."""
     with pytest.raises(TypeError, match="Нельзя складывать Product и str"):
         invalid_result = product1 + "не продукт"
 
 
-def test_product_add(product1, product2):
+def test_product_add2(product1, product2):
     """Тест сложения двух продуктов с проверкой суммы."""
     assert product1 + product2 == 200000  # пример расчёта на основе фикстур
+
+
+def test_initialize_product(product1):
+    assert product1 == Product('молоко', 'ультрапастеризованное', 150, 1000)
+
+
+def test_cannot_instantiate_base_product():
+    """Проверяем, что инстанцировать абстрактный класс BaseProduct невозможно."""
+    with pytest.raises(TypeError, match="Can't instantiate abstract class"):
+        BaseProduct()
+
+
+def test_mixin_info_output(capsys):
+    """
+    Проверяем, что при создании продукта с миксином выводится корректное сообщение.
+    Если атрибуты установлены до вызова super().__init__, ожидается, что они будут выведены.
+    """
+    product = Product("молоко", "ультрапастеризованное", 150, 1000)
+    captured = capsys.readouterr().out
+
+    # Проверяем, что вывод содержит информацию об имени класса.
+    assert "Объект был создан от класса:" in captured
+    # Проверяем, что в выводе содержится информация об атрибутах.
+    # Если атрибуты установлены до вызова super().__init__, то здесь должно быть их значение,
+    # иначе – None.
+    assert "name=" in captured
+    assert "description=" in captured

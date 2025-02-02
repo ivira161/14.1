@@ -1,8 +1,8 @@
 from src.product import Product
 
-
 class Category:
     product_count = 0  # Счётчик всех продуктов во всех категориях
+    category_count = 0  # Счётчик созданных категорий
 
     def __init__(self, name: str, description: str, list_products=None):
         """

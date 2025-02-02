@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 
-
 class BaseProduct(ABC):
     @abstractmethod
     def __init__(self, *args, **kwargs):
@@ -32,7 +31,6 @@ class Product(MiXinInfo, BaseProduct):
         if price <= 0:
             raise ValueError("Цена не должна быть нулевая или отрицательная")
 
-        # Устанавливаем остальные атрибуты
         self.__price = price
         self.quantity = quantity
 
@@ -119,3 +117,4 @@ class LawnGrass(Product):
         base_info = super().__str__()
         return (f"{base_info}, Страна: {self.country}, Срок прорастания: {self.germination_period} дней, "
                 f"Цвет: {self.color}")
+

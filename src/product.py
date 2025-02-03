@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class BaseProduct(ABC):
     @abstractmethod
     def __init__(self, *args, **kwargs):
@@ -22,8 +23,8 @@ class MiXinInfo:
 
 class Product(MiXinInfo, BaseProduct):
     def __init__(self, name: str, description: str, price: float, quantity: int):
-        # Устанавливаем атрибуты до вызова super().__init__,
-        # чтобы миксин мог их использовать при выводе информации.
+        if quantity <= 0:
+            raise ValueError("Товар с нулевым или отрицательным количеством не может быть создан")
         self.name = name
         self.description = description
         super().__init__()
@@ -117,4 +118,3 @@ class LawnGrass(Product):
         base_info = super().__str__()
         return (f"{base_info}, Страна: {self.country}, Срок прорастания: {self.germination_period} дней, "
                 f"Цвет: {self.color}")
-

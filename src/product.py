@@ -23,8 +23,8 @@ class MiXinInfo:
 
 class Product(MiXinInfo, BaseProduct):
     def __init__(self, name: str, description: str, price: float, quantity: int):
-        # Устанавливаем атрибуты до вызова super().__init__,
-        # чтобы миксин мог их использовать при выводе информации.
+        if quantity <= 0:
+            raise ValueError("Товар с нулевым или отрицательным количеством не может быть создан")
         self.name = name
         self.description = description
         super().__init__()
@@ -32,7 +32,6 @@ class Product(MiXinInfo, BaseProduct):
         if price <= 0:
             raise ValueError("Цена не должна быть нулевая или отрицательная")
 
-        # Устанавливаем остальные атрибуты
         self.__price = price
         self.quantity = quantity
 

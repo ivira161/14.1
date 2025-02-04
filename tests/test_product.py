@@ -19,6 +19,14 @@ def test_product_init_invalid_price():
         Product("Товар", "Описание", -5, 10)
 
 
+def test_product_init_zero_quantity():
+    """Тест выброса ValueError при нулевом значении."""
+    with pytest.raises(ValueError, match="Товар с нулевым или отрицательным количеством не может быть создан"):
+        Product("Товар", "Описание", 150, 0)
+    with pytest.raises(ValueError, match="Товар с нулевым или отрицательным количеством не может быть создан"):
+        Product("Товар", "Описание", 150, -10)
+
+
 def test_price_setter_valid():
     """Тест корректной установки цены сеттером."""
     product = Product("Товар", "Описание", 100, 10)

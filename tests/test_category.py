@@ -102,7 +102,9 @@ def test_category_initialization_with_invalid_product():
         Category('Некорректная категория', 'Тестовое описание', ['не продукт'])
 
 
+def test_middle_price():
+    # Создаем категорию без товаров
+    category = Category("Категория", "Описание", [])
 
-
-
-
+    # Проверяем, что средняя цена равна 0.0, а не выбрасывается исключение
+    assert category.average_price() == 0.0

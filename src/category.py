@@ -3,6 +3,7 @@ from src.product import Product
 
 class Category:
     product_count = 0  # Счётчик всех продуктов во всех категориях
+    category_count = 0  # Счётчик созданных категорий
 
     def __init__(self, name: str, description: str, list_products=None):
         """
@@ -57,3 +58,19 @@ class Category:
         каждый товар на новой строке.
         """
         return "\n".join(str(product) for product in self.__list_products)
+
+    def middle_price(self) -> float:
+        """
+        Подсчитывает средний ценник всех товаров в категории.
+        Если товаров нет или возникла ошибка, возвращает 0.0.
+        """
+        try:
+            total_price = sum(product.price for product in self.__list_products)
+            avg_price = total_price / len(self.__list_products)
+            return avg_price
+        except ZeroDivisionError:
+            print("Ошибка: Нельзя делить на ноль. В категории нет товаров.")
+            return 0.0
+        except Exception as e:
+            print(f"Ошибка при вычислении средней цены: {e}")
+            return 0.0
